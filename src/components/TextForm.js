@@ -10,6 +10,18 @@ const TextForm = (props) => {
     let newText = text.toLowerCase();
     setText(newText);
   };
+  const clearAll = () => {
+    let newText = "";
+    setText(newText);
+  };
+    const toCapitalize = () => {
+      let words = text.split(" ");
+      let capitalizedWords = words.map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      });
+      let newText = capitalizedWords.join(" ");
+      setText(newText);
+    };
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -27,31 +39,34 @@ const TextForm = (props) => {
           className="form-control"
           id="text"
           rows="3"
-          placeholder="enter the text here"
+          placeholder="Enter your text here..."
         ></textarea>
       </div>
       <button onClick={toUpperCase} className="btn btn-warning">
-        to uppercase
+        To UpperCase
       </button>
       <button onClick={toLowerCase} className="btn btn-primary ms-3">
-        to lowercase
+        To LowerCase
       </button>
+      <button onClick={clearAll} className="btn btn-danger ms-3">
+        Clear 
+          </button>
+          <button onClick={toCapitalize} className= "btn btn-success ms-3">To Capitalize</button>
       <div className="container my-3">
-        <h4>Your text summary</h4>
+        <h4>Your Text Summary</h4>
         <p>
           {text.trim() === ""
-            ? "0 words and 0 characters"
+            ? "0 Words and 0 Characters"
             : `${text.split(" ").length} words and ${text.length} characters`}
         </p>
         <p>
           {text.trim() === ""
-            ? "0 mins to read"
-            : `${0.008 * text.split("").length} mins to read`}
+            ? "0 Minutes to read"
+            : `${0.008 * text.split("").length} Minutes to read`}
         </p>
-        <h2>preview</h2>
+        <h2>Preview</h2>
         <p>{text}</p>
       </div>
-      
     </>
   );
 };

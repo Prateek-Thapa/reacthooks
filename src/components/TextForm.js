@@ -14,18 +14,26 @@ const TextForm = (props) => {
     let newText = "";
     setText(newText);
   };
-    const toCapitalize = () => {
-      let words = text.split(" ");
-      let capitalizedWords = words.map((word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      });
-      let newText = capitalizedWords.join(" ");
-      setText(newText);
-    };
+  const toCapitalize = () => {
+    let words = text.split(" ");
+    let capitalizedWords = words.map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+    let newText = capitalizedWords.join(" ");
+    setText(newText);
+  };
 
   const handleChange = (event) => {
     setText(event.target.value);
-    // console.log(event.target.value);
+  };
+  const handleExtraspaces = () => {
+    let newText = text.split(/[ ]+/);
+    setText(newText.join(" "));
+  };
+  const copyToClipBoard = () => {
+    const text = document.getElementById("text");
+    text.select();
+    navigator.clipboard.writeText(text.value);
   };
   return (
     <>
@@ -42,16 +50,27 @@ const TextForm = (props) => {
           placeholder="Enter your text here..."
         ></textarea>
       </div>
-      <button onClick={toUpperCase} className="btn btn-warning">
-        To UpperCase
-      </button>
-      <button onClick={toLowerCase} className="btn btn-primary ms-3">
-        To LowerCase
-      </button>
-      <button onClick={clearAll} className="btn btn-danger ms-3">
-        Clear 
-          </button>
-          <button onClick={toCapitalize} className= "btn btn-success ms-3">To Capitalize</button>
+      <div className="container-fluid">
+        <button onClick={toUpperCase} className="btn btn-warning">
+          To UpperCase
+        </button>
+        <button onClick={toLowerCase} className="btn btn-primary ms-3">
+          To LowerCase
+        </button>
+        <button onClick={clearAll} className="btn btn-danger ms-3">
+          Clear
+        </button>
+        <button onClick={toCapitalize} className="btn btn-success ms-3">
+          To Capitalize
+        </button>
+        <button onClick={handleExtraspaces} className="btn btn-info ms-3 ">
+          Clear extra spaces
+        </button>
+        <button onClick={copyToClipBoard} className="btn btn-info ms-3 ">
+          Copy
+        </button>
+      </div>
+      <div className="container"></div>
       <div className="container my-3">
         <h4>Your Text Summary</h4>
         <p>
@@ -65,7 +84,9 @@ const TextForm = (props) => {
             : `${0.008 * text.split("").length} Minutes to read`}
         </p>
         <h2>Preview</h2>
-        <p>{text}</p>
+        <div className="container mx-auto">
+          <p>{text}</p>
+        </div>
       </div>
     </>
   );
